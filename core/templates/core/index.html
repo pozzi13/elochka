@@ -1,0 +1,225 @@
+{% extends "core/base.html" %}
+
+
+{% block content %}
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <p class="badge">Нижневартовск</p>
+          <h1>Массажный салон «Ёлочка»</h1>
+          <p class="hero__lead">
+            Лечебный • Расслабляющий • Антицеллюлитный • Массаж спины.
+            Запись по телефону или через форму на сайте.
+          </p>
+
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#booking">Записаться</a>
+            <a class="btn btn--ghost" href="#prices">Узнать цены</a>
+          </div>
+
+          <div class="hero__info">
+            <div class="info">
+              <span class="info__label">Адрес</span>
+              <span class="info__value">Нижневартовск, ул. Примерная, 12</span>
+            </div>
+            <div class="info">
+              <span class="info__label">Время</span>
+              <span class="info__value">Ежедневно 10:00–20:00</span>
+            </div>
+            <div class="info">
+              <span class="info__label">Телефон</span>
+              <span class="info__value"><a href="tel:+73466123456">8 (3466) 123-456</a></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero__media" aria-label="Фото салона">
+          <div class="media-card">
+            <img
+              src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?auto=format&fit=crop&w=1200&q=70"
+              alt="Интерьер массажного кабинета"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOOKING -->
+    <section class="booking" id="booking">
+      <div class="container">
+        <div class="panel">
+          <div class="panel__head">
+            <h2>Быстрая запись</h2>
+            <p>Оставьте контакты — мы перезвоним и подберём удобное время.</p>
+          </div>
+
+          {% if messages %}
+            <div style="margin: 0 0 12px;">
+              {% for message in messages %}
+                <p style="margin: 0 0 8px; font-weight: 800; color: {% if message.tags == 'success' %}#2E5B3A{% elif message.tags == 'error' %}#8B2E2E{% else %}#33443A{% endif %};">
+                  {{ message }}
+                </p>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <form class="form" action="{% url 'core:booking_create' %}" method="post">
+            {% csrf_token %}
+            <label class="field">
+              <span>Имя</span>
+              <input type="text" name="name" placeholder="Например, Анна" required />
+            </label>
+
+            <label class="field">
+              <span>Телефон</span>
+              <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" required />
+            </label>
+
+            <label class="field">
+              <span>Услуга</span>
+              <select name="service" required>
+                <option value="">Выберите услугу</option>
+                <option value="therapy">Лечебный массаж</option>
+                <option value="relax">Расслабляющий массаж</option>
+                <option value="anticell">Антицеллюлитный массаж</option>
+                <option value="back">Массаж спины</option>
+              </select>
+            </label>
+
+            <button class="btn btn--primary" type="submit">Отправить</button>
+
+            <p class="form__note">
+              Нажимая «Отправить», вы соглашаетесь с обработкой персональных данных.
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section__head">
+          <h2>Услуги массажа</h2>
+          <p>Выберите подходящий вид массажа — расскажем, как проходит сеанс и что ожидать.</p>
+        </div>
+
+        <div class="grid cards">
+          <article class="card" id="service-therapy">
+            <div class="card__img">
+              <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b5?auto=format&fit=crop&w=1200&q=70"
+                   alt="Лечебный массаж" loading="lazy" />
+            </div>
+            <h3>Лечебный массаж</h3>
+            <p>Помогает при мышечном напряжении, дискомфорте в спине и шее. Подбор техники индивидуально.</p>
+            <ul class="card__meta">
+              <li>60 мин</li><li>от 1500 ₽</li>
+            </ul>
+            <a class="btn btn--ghost" href="#booking">Записаться</a>
+          </article>
+
+          <article class="card" id="service-relax">
+            <div class="card__img">
+              <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1200&q=70"
+                   alt="Расслабляющий массаж" loading="lazy" />
+            </div>
+            <h3>Расслабляющий массаж</h3>
+            <p>Снимает стресс и усталость, улучшает сон, помогает “перезагрузиться” после тяжёлого дня.</p>
+            <ul class="card__meta">
+              <li>60 мин</li><li>от 1400 ₽</li>
+            </ul>
+            <a class="btn btn--ghost" href="#booking">Записаться</a>
+          </article>
+
+          <article class="card" id="service-anticell">
+            <div class="card__img">
+              <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=70"
+                   alt="Антицеллюлитный массаж" loading="lazy" />
+            </div>
+            <h3>Антицеллюлитный массаж</h3>
+            <p>Интенсивная техника для улучшения тонуса кожи. Рекомендуется курсом, с учётом противопоказаний.</p>
+            <ul class="card__meta">
+              <li>60 мин</li><li>от 1600 ₽</li>
+            </ul>
+            <a class="btn btn--ghost" href="#booking">Записаться</a>
+          </article>
+
+          <article class="card" id="service-back">
+            <div class="card__img">
+              <img src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?auto=format&fit=crop&w=1200&q=70"
+                   alt="Массаж спины" loading="lazy" />
+            </div>
+            <h3>Массаж спины</h3>
+            <p>Фокус на пояснице и грудном отделе: улучшение подвижности и снятие зажимов.</p>
+            <ul class="card__meta">
+              <li>40 мин</li><li>от 1200 ₽</li>
+            </ul>
+            <a class="btn btn--ghost" href="#booking">Записаться</a>
+          </article>
+        </div>
+
+        <div class="features">
+          <div class="feature">
+            <h3>Аккуратно и чисто</h3>
+            <p>Одноразовые материалы и регулярная обработка поверхностей.</p>
+          </div>
+          <div class="feature">
+            <h3>Индивидуальный подход</h3>
+            <p>Учитываем ваши ощущения, цели и противопоказания.</p>
+          </div>
+          <div class="feature">
+            <h3>Удобная запись</h3>
+            <p>Телефон, мессенджеры или форма на сайте — как вам проще.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICES -->
+    <section class="section section--alt" id="prices">
+      <div class="container">
+        <div class="section__head">
+          <h2>Цены</h2>
+          <p>Прозрачный прайс. Итоговая стоимость зависит от длительности и выбранной техники.</p>
+        </div>
+
+        <div class="prices">
+          <div class="prices__table" role="table" aria-label="Прайс на услуги массажа">
+            <div class="prices__row prices__row--head" role="row">
+              <div role="columnheader">Услуга</div>
+              <div role="columnheader">Время</div>
+              <div role="columnheader">Цена</div>
+            </div>
+
+            <div class="prices__row" role="row">
+              <div role="cell">Лечебный массаж</div><div role="cell">60 мин</div><div role="cell">1500 ₽</div>
+            </div>
+            <div class="prices__row" role="row">
+              <div role="cell">Расслабляющий массаж</div><div role="cell">60 мин</div><div role="cell">1400 ₽</div>
+            </div>
+            <div class="prices__row" role="row">
+              <div role="cell">Антицеллюлитный массаж</div><div role="cell">60 мин</div><div role="cell">1600 ₽</div>
+            </div>
+            <div class="prices__row" role="row">
+              <div role="cell">Массаж спины</div><div role="cell">40 мин</div><div role="cell">1200 ₽</div>
+            </div>
+          </div>
+
+          <aside class="prices__aside">
+            <h3>Абонементы и акции</h3>
+            <ul class="list">
+              <li>5 сеансов — скидка 10%</li>
+              <li>Первый визит — скидка 20%</li>
+              <li>Подарочный сертификат</li>
+            </ul>
+            <div class="prices__cta">
+              <a class="btn btn--primary" href="#booking">Записаться</a>
+              <a class="btn btn--ghost" href="{% url 'core:contacts' %}">Задать вопрос</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,242 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Контакты и отзывы — Салон массажа «Ёлочка» (Нижневартовск)</title>
+  <meta name="description" content="Контакты массажного салона «Ёлочка» (Нижневартовск): адрес, телефон, режим работы. Реальные отзывы клиентов и форма для добавления отзыва." />
+  <meta name="theme-color" content="#2E5B3A" />
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="{% url 'core:home' %}" aria-label="На главную">
+        <span class="logo__mark" aria-hidden="true"></span>
+        <span class="logo__text">
+          <span class="logo__title">Ёлочка</span>
+          <span class="logo__subtitle">массажный салон</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Основное меню">
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="navMenu">
+          <span class="nav__toggle-line"></span>
+          <span class="nav__toggle-line"></span>
+          <span class="nav__toggle-line"></span>
+          <span class="sr-only">Открыть меню</span>
+        </button>
+
+        <ul class="nav__list" id="navMenu">
+          <li><a href="{% url 'core:services_prices' %}#services">Услуги</a></li>
+          <li><a href="{% url 'core:services_prices' %}#prices">Цены</a></li>
+          <li><a href="#reviews">Отзывы</a></li>
+          <li><a href="#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__actions">
+        <a class="header__phone" href="tel:+73466123456">8 (3466) 123-456</a>
+        <a class="btn btn--primary" href="{% url 'core:home' %}#booking">Записаться</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <p class="badge">Нижневартовск</p>
+          <h1>Контакты и отзывы</h1>
+          <p class="hero__lead">
+            Здесь — контактные данные салона и реальные отзывы клиентов. Вы тоже можете оставить отзыв.
+          </p>
+
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#contacts">К контактам</a>
+            <a class="btn btn--ghost" href="#review-form">Оставить отзыв</a>
+          </div>
+
+          <div class="hero__info">
+            <div class="info">
+              <span class="info__label">Адрес</span>
+              <span class="info__value">Нижневартовск, ул. Примерная, 12</span>
+            </div>
+            <div class="info">
+              <span class="info__label">Время</span>
+              <span class="info__value">Ежедневно 10:00–20:00</span>
+            </div>
+            <div class="info">
+              <span class="info__label">Телефон</span>
+              <span class="info__value"><a href="tel:+73466123456">8 (3466) 123-456</a></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero__media" aria-label="Фото салона">
+          <div class="media-card">
+            <img
+              src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?auto=format&fit=crop&w=1200&q=70"
+              alt="Интерьер массажного кабинета"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="section" id="reviews">
+      <div class="container">
+        <div class="section__head">
+          <h2>Отзывы</h2>
+          <p>Публикуются реальные отзывы, отправленные через форму (после модерации).</p>
+        </div>
+
+        {% if messages %}
+          <div style="margin: 0 0 12px;">
+            {% for message in messages %}
+              <p style="margin: 0 0 8px; font-weight: 800; color: {% if message.tags == 'success' %}#2E5B3A{% elif message.tags == 'error' %}#8B2E2E{% else %}#33443A{% endif %};">
+                {{ message }}
+              </p>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="grid reviews">
+          {% for r in reviews %}
+            <article class="review">
+              <p class="review__name">{{ r.name }}</p>
+              <p class="review__stars" aria-label="Оценка {{ r.rating }} из 5">{{ r.stars }}</p>
+              <p class="review__text">{{ r.text }}</p>
+            </article>
+          {% empty %}
+            <article class="review">
+              <p class="review__name">Пока нет отзывов</p>
+              <p class="review__stars" aria-label="Оценка 0 из 5">☆☆☆☆☆</p>
+              <p class="review__text">Оставьте первый отзыв — он появится после модерации.</p>
+            </article>
+          {% endfor %}
+        </div>
+
+        <!-- REVIEW FORM (same styling as booking panel) -->
+        <div class="panel" id="review-form" style="margin-top:18px;">
+          <div class="panel__head">
+            <h2>Оставить отзыв</h2>
+            <p>Поля обязательны. Отзыв появится на сайте после проверки в админке.</p>
+          </div>
+
+          <form class="form" action="{% url 'core:review_create' %}" method="post">
+            {% csrf_token %}
+
+            <label class="field">
+              <span>Имя</span>
+              <input type="text" name="name" placeholder="Ваше имя" required />
+            </label>
+
+            <label class="field">
+              <span>Оценка</span>
+              <select name="rating" required>
+                <option value="5">5/5</option>
+                <option value="4">4/5</option>
+                <option value="3">3/5</option>
+                <option value="2">2/5</option>
+                <option value="1">1/5</option>
+              </select>
+            </label>
+
+            <label class="field" style="grid-column: 1 / -1;">
+              <span>Текст отзыва</span>
+              <input type="text" name="text" placeholder="Напишите ваш отзыв (минимум 12 символов)" required />
+            </label>
+
+            <button class="btn btn--primary" type="submit">Отправить</button>
+
+            <p class="form__note">
+              Отзыв проходит модерацию. Не публикуйте личные данные других людей.
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTS -->
+    <section class="section section--alt" id="contacts">
+      <div class="container">
+        <div class="section__head">
+          <h2>Контакты</h2>
+          <p>Адрес, телефон и режим работы — чтобы легко нас найти.</p>
+        </div>
+
+        <div class="contacts">
+          <div class="contacts__card">
+            <h3>Салон «Ёлочка»</h3>
+            <p><strong>Город:</strong> Нижневартовск</p>
+            <p><strong>Адрес:</strong> ул. Примерная, 12</p>
+            <p><strong>Телефон:</strong> <a href="tel:+73466123456">8 (3466) 123-456</a></p>
+            <p><strong>Режим работы:</strong> ежедневно 10:00–20:00</p>
+
+            <div class="contacts__buttons">
+              <a class="btn btn--primary" href="tel:+73466123456">Позвонить</a>
+              <a class="btn btn--ghost" href="{% url 'core:home' %}#booking">Записаться</a>
+            </div>
+          </div>
+
+          <div class="map">
+            <div class="map__placeholder" role="img" aria-label="Карта проезда">
+              <p>Здесь будет карта (Яндекс.Карты)</p>
+              <p class="s">Можно вставить iframe позже</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <p class="footer__brand">Ёлочка</p>
+        <p class="footer__muted">массажный салон · Нижневартовск</p>
+      </div>
+
+      <div>
+        <p class="footer__title">Меню</p>
+        <ul class="footer__list">
+          <li><a href="{% url 'core:home' %}">Главная</a></li>
+          <li><a href="{% url 'core:services_prices' %}">Услуги и цены</a></li>
+          <li><a href="#reviews">Отзывы</a></li>
+          <li><a href="#contacts">Контакты</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer__title">Контакты</p>
+        <ul class="footer__list">
+          <li>ул. Примерная, 12</li>
+          <li><a href="tel:+73466123456">8 (3466) 123-456</a></li>
+          <li>10:00–20:00</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer__title">Документы</p>
+        <ul class="footer__list">
+          <li><a href="#" aria-disabled="true">Политика конфиденциальности</a></li>
+          <li><a href="{% url 'core:sitemap_html' %}">Карта сайта (sitemap.html)</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer__bottom">
+      <p>© 2025 Салон «Ёлочка». Учебный проект.</p>
+    </div>
+  </footer>
+
+  <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

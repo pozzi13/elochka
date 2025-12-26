@@ -1,0 +1,36 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+<h1>Отзывы клиентов</h1>
+
+<div class="grid reviews" id="reviews">
+  {% for r in reviews %}
+    <article class="review">
+      <p class="review__name">{{ r.name }}</p>
+      <p class="review__stars" aria-label="Оценка {{ r.rating }} из 5">{{ r.stars }}</p>
+      <p class="review__text">{{ r.text }}</p>
+    </article>
+  {% empty %}
+    <article class="review">
+      <p class="review__name">Пока нет отзывов</p>
+      <p class="review__stars" aria-label="Оценка 0 из 5">☆☆☆☆☆</p>
+      <p class="review__text">Оставьте первый отзыв через форму ниже.</p>
+    </article>
+  {% endfor %}
+</div>
+
+<hr style="margin:24px 0; opacity:.25;">
+
+<h2 id="review-form">Оставить отзыв</h2>
+
+<form method="post" action="{% url 'core:review_create' %}">
+  {% csrf_token %}
+  {{ review_form.as_p }}
+  <button class="btn btn--primary" type="submit">Отправить отзыв</button>
+</form>
+
+<div style="margin-top:14px;">
+  <a class="btn btn--ghost" href="{% url 'core:contacts' %}">Как нас найти</a>
+</div>
+
+{% endblock %}

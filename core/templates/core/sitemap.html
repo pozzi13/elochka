@@ -1,0 +1,49 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Карта сайта — «Ёлочка»</title>
+  <meta name="description" content="Карта сайта массажного салона «Ёлочка» (Нижневартовск)." />
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="{% url 'core:home' %}" aria-label="На главную">
+        <span class="logo__mark" aria-hidden="true"></span>
+        <span class="logo__text">
+          <span class="logo__title">Ёлочка</span>
+          <span class="logo__subtitle">массажный салон</span>
+        </span>
+      </a>
+      <div class="header__actions">
+        <a class="header__phone" href="tel:+73466123456">8 (3466) 123-456</a>
+        <a class="btn btn--primary" href="{% url 'core:home' %}#booking">Записаться</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="section__head">
+        <h1 style="margin:0 0 8px; font-size:30px;">Карта сайта</h1>
+        <p style="margin:0; color:#33443A; font-weight:600;">Список основных страниц проекта.</p>
+      </div>
+
+      <div class="panel">
+        <ul class="list">
+          <li><a href="{% url 'core:home' %}">Главная</a></li>
+          <li><a href="{% url 'core:contacts' %}">Контакты</a></li>
+          <li><a href="{% url 'core:reviews' %}">Отзывы</a></li>
+          <li><a href="{% url 'core:sitemap_xml' %}">sitemap.xml</a></li>
+          <li><a href="{% url 'core:robots_txt' %}">robots.txt</a></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

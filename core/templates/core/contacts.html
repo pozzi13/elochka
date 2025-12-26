@@ -1,0 +1,30 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<h1>Контакты</h1>
+
+<div class="contacts">
+          <div class="contacts__card">
+            <h3>Салон «Ёлочка»</h3>
+            <p><strong>Город:</strong> Нижневартовск</p>
+            <p><strong>Адрес:</strong> ул. Примерная, 12</p>
+            <p><strong>Телефон:</strong> <a href="tel:+73466123456">8 (3466) 123-456</a></p>
+            <p><strong>Режим работы:</strong> ежедневно 10:00–20:00</p>
+
+            <div class="contacts__buttons">
+              <a class="btn btn--primary" href="tel:+73466123456">Позвонить</a>
+              <a class="btn btn--ghost" href="{% url 'core:home' %}#booking">Записаться</a>
+            </div>
+          </div>
+
+          <div class="map">
+            <!-- Для практики достаточно заглушки.-->
+            <div class="map__placeholder" role="img" aria-label="Карта проезда">
+              <p>Здесь будет карта (Яндекс.Карты)</p>
+              <p class="s">вставить iframe</p>
+            </div>
+          </div>
+        </div>
+
+{% endblock %}
