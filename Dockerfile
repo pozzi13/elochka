@@ -5,18 +5,16 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# системные пакеты — ОТДЕЛЬНО
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     build-essential \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# python-зависимости — ОТДЕЛЬНО
-COPY elochka_final/requirements.txt ./requirements.txt
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# код
-COPY elochka_final/ .
+COPY . .
 
-CMD ["gunicorn", "elochka_final.wsgi:application", "--bind", "0.0.0.0:8000"]
+# если Timeweb прокидывает PORT — используем его, иначе 8000
+CMD ["sh", "-c", "gunicorn <ТВОЙ_ПРОЕКТ>.wsgi:application --bind 0.0.0.0:${PORT:-8000}"]
