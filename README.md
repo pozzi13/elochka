@@ -62,4 +62,6 @@ Open in browser:
 - save changes
 Only published reviews are displayed on the website.
 
-html from `core/templates/core/`.
+## Live Demo
+
+https://yarick0.pythonanywhere.com/
