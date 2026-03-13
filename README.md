@@ -55,7 +55,7 @@ python manage.py runserver
 - Users can submit reviews through the website form.
 - New reviews are saved with is_published = False by default.
 
-##To publish a review:
+## To publish a review:
 - open Django admin panel
 - go to Reviews
 - enable the Published checkbox
