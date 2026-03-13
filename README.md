@@ -63,5 +63,4 @@ Open in browser:
 Only published reviews are displayed on the website.
 
 ## Live Demo
-
 https://yarick0.pythonanywhere.com/
