@@ -46,9 +46,9 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-Открыть:
-- Главная: `http://127.0.0.1:8000/`
-- Админка: `http://127.0.0.1:8000/admin/`
+Open in browser:
+- Home: `http://127.0.0.1:8000/`
+- Admin: `http://127.0.0.1:8000/admin/`
 
 ## Reviews moderation
 
