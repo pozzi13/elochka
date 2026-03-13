@@ -1,17 +1,37 @@
-# Сайт «Ёлочка» — Django + ваш HTML/CSS
+# Elochka Massage Salon Website
 
-Этот проект **берёт ваш готовый фронтенд** (index.html + style.css + script.js) и добавляет **бекенд на Django**:
+Django web application for a massage salon website.
 
-- 3 страницы (как просили: не раздуваем):
-  - `/` — главная (ваш лендинг)
-  - `/uslugi-i-ceny/` — услуги и цены
-  - `/kontakty-i-otzyvy/` — контакты + реальные отзывы + форма добавления
-- Админка `/admin/`:
-  - заявки на запись
-  - отзывы (с модерацией: галочка "Опубликован")
-- `robots.txt`, `sitemap.xml`, `sitemap.html`.
+## Features
 
-## Запуск локально
+- landing page with salon information
+- services and pricing page
+- contacts and reviews page
+- booking form
+- review submission form with moderation
+- Django admin panel
+- sitemap.xml, sitemap.html and robots.txt
+- static files support with WhiteNoise
+
+## Pages
+
+- `/` — home page
+- `/uslugi-i-ceny/` — services and pricing
+- `/kontakty-i-otzyvy/` — contacts and reviews
+- `/reviews/` — reviews page
+- `/contacts/` — contacts page
+- `/admin/` — admin panel
+
+## Technologies
+
+- Python
+- Django
+- SQLite
+- HTML
+- CSS
+- WhiteNoise
+
+## Local setup
 
 ```bash
 python -m venv .venv
@@ -30,16 +50,16 @@ python manage.py runserver
 - Главная: `http://127.0.0.1:8000/`
 - Админка: `http://127.0.0.1:8000/admin/`
 
-## Как устроены отзывы
+## Reviews moderation
 
-- Отзыв добавляется через форму на странице `/kontakty-i-otzyvy/`.
-- По умолчанию он попадает на модерацию (`Опубликован = False`).
-- Чтобы отзыв появился на сайте — зайди в админку и поставь галочку **Опубликован**.
+- Users can submit reviews through the website form.
+- New reviews are saved with is_published = False by default.
 
-## Где лежит ваш фронтенд
+##To publish a review:
+- open Django admin panel
+- go to Reviews
+- enable the Published checkbox
+- save changes
+Only published reviews are displayed on the website.
 
-- CSS/JS взяты **без правок** и лежат в папке `static/`:
-  - `static/style.css`
-  - `static/script.js`
-
-Шаблоны страниц в `core/templates/core/`.
+html from `core/templates/core/`.
